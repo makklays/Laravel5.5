@@ -6,6 +6,7 @@ use App\Author;
 use App\Book;
 use App\Http\Requests\addBookRequest;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
 class BooksController extends Controller
@@ -139,5 +140,13 @@ class BooksController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getAllBooks()
+    {
+        return response()->json([
+            'info' => 'API по предоставлению списка Книг от 04/09/2019',
+            'data' => Book::orderBy('title', 'ASC')->get()
+        ],200);
     }
 }

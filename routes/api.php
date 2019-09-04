@@ -21,3 +21,6 @@ use App\Persons;
 // Публичный API - отдает пользователей по url
 Route::get('persons', 'PersonController@getPersons'); // by 100 persons
 Route::get('all-persons', ['uses' => 'PersonController@getAllPersons']); // all
+
+Route::get('all-books', 'BooksController@getAllBooks');
+Route::get('all-authors', 'AuthorsController@getAllAuthors');

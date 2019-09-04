@@ -93,4 +93,14 @@ class AuthorsController extends Controller
     {
         //
     }
+
+    public function getAllAuthors()
+    {
+        return response()->json([
+            'info' => 'API по предоставлению списка Авторов от 04/09/2019',
+            'data' => Author::orderBy('lastname', 'ASC')
+                ->orderBy('firstname', 'ASC')
+                ->get()
+        ],200);
+    }
 }
