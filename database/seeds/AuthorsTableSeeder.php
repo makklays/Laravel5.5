@@ -17,7 +17,7 @@ class AuthorsTableSeeder extends Seeder
         // 1
         DB::table('authors')->insert([
             'id' => 1,
-            'firstname' => 'Афтор',
+            'firstname' => 'Афтар',
             'lastname' => 'Жжет',
         ]);
         $this->command->getOutput()->progressAdvance();
@@ -25,8 +25,8 @@ class AuthorsTableSeeder extends Seeder
         // 2
         DB::table('authors')->insert([
             'id' => 2,
-            'firstname' => 'Афтааар',
-            'lastname' => 'Нежжет',
+            'firstname' => 'ААААА',
+            'lastname' => 'БББББ',
         ]);
         $this->command->getOutput()->progressAdvance();
 
@@ -41,64 +41,64 @@ class AuthorsTableSeeder extends Seeder
         // 4
         DB::table('authors')->insert([
             'id' => 4,
-            'firstname' => 'Гдеты',
-            'lastname' => 'Афтоff',
+            'firstname' => 'Имя1',
+            'lastname' => 'Фамилия1',
         ]);
         $this->command->getOutput()->progressAdvance();
 
         // 5
         DB::table('authors')->insert([
             'id' => 5,
-            'firstname' => 'Гдетыwe',
-            'lastname' => 'Афтоff',
+            'firstname' => 'Имя2',
+            'lastname' => 'Фамилия2',
         ]);
         $this->command->getOutput()->progressAdvance();
 
         // 6
         DB::table('authors')->insert([
             'id' => 6,
-            'firstname' => 'Гдer4tеты',
-            'lastname' => 'Афdfтоff',
+            'firstname' => 'Имя3',
+            'lastname' => 'Фамилия3',
         ]);
         $this->command->getOutput()->progressAdvance();
 
         // 7
         DB::table('authors')->insert([
             'id' => 7,
-            'firstname' => 'Гдwghjer4tеты',
-            'lastname' => 'Афdfтоghjgff',
+            'firstname' => 'Имя4',
+            'lastname' => 'Фамилия4',
         ]);
         $this->command->getOutput()->progressAdvance();
 
         // 8
         DB::table('authors')->insert([
             'id' => 8,
-            'firstname' => 'Гдeeee',
-            'lastname' => 'Афwwwww',
+            'firstname' => 'Имя6',
+            'lastname' => 'Фамилия6',
         ]);
         $this->command->getOutput()->progressAdvance();
 
         // 9
         DB::table('authors')->insert([
             'id' => 9,
-            'firstname' => 'Гдeeeaaaae',
-            'lastname' => 'Афwaaaaaawwww',
+            'firstname' => 'Имя7',
+            'lastname' => 'Фамилия7',
         ]);
         $this->command->getOutput()->progressAdvance();
 
         // 10
         DB::table('authors')->insert([
             'id' => 10,
-            'firstname' => 'KJgiuerf',
-            'lastname' => 'OUIOYFC',
+            'firstname' => 'Имя8',
+            'lastname' => 'Фамилия8',
         ]);
         $this->command->getOutput()->progressAdvance();
 
         // 11
         DB::table('authors')->insert([
-            'id' => 10,
-            'firstname' => 'Oghotpymtas',
-            'lastname' => 'Tsdflwoerfnw',
+            'id' => 11,
+            'firstname' => 'Имя01',
+            'lastname' => 'Фамилия01',
         ]);
         $this->command->getOutput()->progressAdvance();
 

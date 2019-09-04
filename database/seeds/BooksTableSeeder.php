@@ -19,9 +19,9 @@ class BooksTableSeeder extends Seeder
             'id' => 1,
             'user_id' => 1,
             'author_id' => 1,
-            'title' => 'КорзинНа',
-            'count_page' => '2000',
-            'annotation' => 'Так себе)',
+            'title' => 'Мужчины с Марса, женщины с Венеры',
+            'count_page' => '350',
+            'annotation' => '101 способ о том как стать ближе.',
             //'picture' => '',
         ]);
         $this->command->getOutput()->progressAdvance();
