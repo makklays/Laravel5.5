@@ -6,7 +6,7 @@
     <div class="container">
         <div class="row" style="margin: 0;">
             <div class="col-md-12">
-                <h1>All News (<?=$news->count()?>)</h1>
+                <h1>All News (<?=$news->total()?>)</h1>
             </div>
 
             <div class="col-md-12">
