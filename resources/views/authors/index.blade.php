@@ -1,5 +1,5 @@
 
-@extends('layout.withmenu')
+@extends('layout.app')
 
 @section('content')
 

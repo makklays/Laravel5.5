@@ -1,5 +1,5 @@
 
-@extends('layout.withmenu')
+@extends('layout.app')
 
 @section('content')
 
@@ -21,13 +21,18 @@
 
                 <?php foreach($books as $n): ?>
 
-
                     <!--a href="{{ route('show_book', $n->id) }}" -->
                         <h2 style="margin-top:0;"><?=$n->title?></h2>
                     <!--/a -->
 
+                    @if (isset($n->picture) && !empty($n->picture) && file_exists(public_path('/storage/books/'.$n->picture)) )
+                        <div style="margin: 0 0 20px 0;">
+                            <img src="/storage/books/<?=$n->picture?>" title="<?=$n->title?>" alt="" style="width:200px;" />
+                        </div>
+                    @endif
+
                     <div >
-                        <form action="{{ route('edit_book', $n->id) }}" method="post" style="float:left; margin-right:10px;">
+                        <form action="{{ route('edit_book', $n->id) }}" method="get" style="float:left; margin-right:10px;">
                             {{ csrf_field() }}
                             <input type="submit" class="btn btn-primary btn-sm" value="Редактировать" />
                         </form>

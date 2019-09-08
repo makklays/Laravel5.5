@@ -11,7 +11,7 @@ class AuthorsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -46,13 +46,13 @@ class AuthorsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id)
     {
         $author = Author::where('id', $id)->first();
-        $books = Book::where('author_id', $id)->paginate(1);
+        $books = Book::where('author_id', $id)->get();
 
         return View('authors.show', [
             'books' => $books,
@@ -94,13 +94,43 @@ class AuthorsController extends Controller
         //
     }
 
+    /**
+     * For API
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getAllAuthors()
     {
         return response()->json([
-            'info' => 'API по предоставлению списка Авторов от 04/09/2019',
+            'info' => 'API по предоставлению списка Авторов.',
             'data' => Author::orderBy('lastname', 'ASC')
                 ->orderBy('firstname', 'ASC')
                 ->get()
+        ],200);
+    }
+
+    /**
+     * For API
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAuthor($id)
+    {
+        return response()->json([
+            'info' => 'API по предоставлению инфо об Авторе.',
+            'data' => Author::where('id', $id)->first()
+        ],200);
+    }
+
+    /**
+     * For API
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getBooksByAuthorId($id)
+    {
+        return response()->json([
+            'info' => 'API по предоставлению списка книг конкретного автора.',
+            'data' => Book::where('author_id', $id)->get()
         ],200);
     }
 }

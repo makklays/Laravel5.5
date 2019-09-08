@@ -13,7 +13,7 @@
 
                 @include('parts.flash')
 
-                <form action="{{ route('update_book', $book->id) }}" method="post">
+                <form action="{{ route('update_book', $book->id) }}" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
 
                     <div class="form-group required">
@@ -67,7 +67,15 @@
 
                     <div class="form-group">
                         <label for="id-picture">Картинка:</label>
+
+                        @if (file_exists(public_path('/storage/books/'.$book->picture)))
+                            <div style="margin: 0 0 20px 0;">
+                                <img src="/storage/books/<?=$book->picture?>" title="<?=$book->title?>" alt="" style="width:150px;" />
+                            </div>
+                        @endif
+
                         <input type="file" name="picture" rows="7" class="form-control-file" id="id-picture" value="<?=$book->picture?>" placeholder="" />
+                        <small id="fileHelp" class="form-text text-muted">Пожалуйста, загрузите действительный файл изображения. Размер изображения не должен превышать 2 МБ.</small>
 
                         <?php if ($errors->has('picture')): ?>
                         <div class="invalid-picture" role="alert" style="font-size:12px; color:#d64028;"><?=$errors->first('picture')?></div>

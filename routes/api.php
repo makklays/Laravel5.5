@@ -24,3 +24,20 @@ Route::get('all-persons', ['uses' => 'PersonController@getAllPersons']); // all
 
 Route::get('all-books', 'BooksController@getAllBooks');
 Route::get('all-authors', 'AuthorsController@getAllAuthors');
+
+Route::get('book/{id}', 'BooksController@getBook')->where(['id' => '[0-9]+']);
+Route::get('author/{id}', 'AuthorsController@getAuthor')->where(['id' => '[0-9]+']);
+
+Route::get('author/{id}/books', 'AuthorsController@getBooksByAuthorId')->where(['id' => '[0-9]+']);
+
+// для авторизованного пользователя
+Route::get('my-books', 'BooksController@getMyBooks');
+Route::post('create-book', 'BooksController@saveBooks');
+Route::put('update-book/{id}', 'BooksController@patchBooks')->where(['id' => '[0-9]+']);
+Route::delete('delete-book', 'BooksController@deleteBooks');
+
+// API
+Route::post('search-ttable', ['as' => 'search_ttable', 'uses' => 'TTableController@search']);
+Route::get('all-ttable', 'TTableController@getTTable');
+
+

@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/menu', function () {
+    return view('menu');
+});
+
 // Новости
 Route::get('/news', ['as' => 'all_news', 'uses' => 'NewsController@index']);
 Route::get('/create-news', ['as' => 'create_news', 'uses' => 'NewsController@create']);
@@ -40,6 +44,9 @@ Route::get('/authors', ['as' => 'all_authors', 'uses' => 'AuthorsController@inde
 //Route::post('/store-author', ['as' => 'store_author', 'uses' => 'AuthorsController@store']);
 //Route::post('/delete-author/{id}', ['as' => 'delete_author', 'uses' => 'AuthorsController@destroy'])->where(['id' => '[0-9]+']);
 Route::get('/author/{id}', ['as' => 'show_author', 'uses' => 'AuthorsController@show'])->where(['id' => '[0-9]+']);
+
+Route::get('ttable', ['as' => 'form_ttable', 'uses' => 'TTableController@form']);
+Route::get('ttable-vue', ['as' => 'form_ttable_vue', 'uses' => 'TTableController@formVue']);
 
 //Auth::routes();
 
