@@ -8,15 +8,19 @@
                 <a href="{{ route('all_authors') }}" ><< Все авторы</a>
                 <h1><?=$author->firstname?> <?=$author->lastname?></h1>
             </div>
+
             <div class="col-md-12">
-                <h4>Написанные им книги:</h4>
+                <h4>Написанные им книги (<?=$books->count()?>):</h4>
             </div>
+
             <div class="col-md-12">
-                <?php if(isset($books) && !empty($books)): ?>
+                @if (isset($books) && !empty($books->count()))
                     <?php foreach($books as $book): ?>
                         <div><?=$book->title?> (<?=$book->count_page?> страниц)</div>
                     <?php endforeach; ?>
-                <?php endif; ?>
+                @else
+                    Нет
+                @endif
             </div>
         </div>
     </div>

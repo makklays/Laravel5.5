@@ -20,10 +20,9 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" >
 
     <!-- Scripts -->
-    <script src="{{ asset('js/jquery-3.4.0.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/myapp.js') }}" type="text/javascript" ></script>
-    <script src="{{ asset('js/package.js') }}" type="text/javascript" ></script>
+    <script src="{{ asset('js/vue.js') }}" type="text/javascript"></script>
+
 
     <!-- Fonts -->
     <link rel="stylesheet" type="text/css" media="all" href="/bootstrap-4.3.1/css/bootstrap.min.css" />
@@ -41,5 +40,8 @@
         </div>
 
     </div>
+
+    <!-- подключаем Vue.js -->
+    <script src="{{ asset('js/MyVue.js') }}" type="text/javascript" ></script>
 </body>
 </html>
