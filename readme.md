@@ -4,10 +4,10 @@
 
 Site: [makklays.com.ua](http://makklays.com.ua?from=github_laravel)
 
-[EN](https://github.com/makklays/Laravel5.5/blob/master/README.md#ua) - 
-[ES](https://github.com/makklays/Laravel5.5/blob/master/README.md#es) - 
-[UA](https://github.com/makklays/Laravel5.5/blob/master/README.md#ua) - 
-[CH](https://github.com/makklays/Laravel5.5/blob/master/README.md#ch) 
+[EN](https://github.com/makklays/Laravel5.5#ua) - 
+[ES](https://github.com/makklays/Laravel5.5#es) - 
+[UA](https://github.com/makklays/Laravel5.5#ua) - 
+[CH](https://github.com/makklays/Laravel5.5#ch) 
 
 #### UA: 
 **Виконане завдання для перевiрки знань Laravel 5.5** <br/><br/>
@@ -24,17 +24,17 @@ Site: [makklays.com.ua](http://makklays.com.ua?from=github_laravel)
 Вимоги:<br/>
 **API:**  <br/>
 - Використовуючи таблицю з данними (нижче) створити API route, що дозволяють шукати даннi; <br/>
-  name        price      bedrooms    bathrooms    storeys    garages <br/>
+  name | price | bedrooms | bathrooms | storeys | garages <br/>
   -------------------------------------------------------------------- <br/>
-  Victoria    374662     4           2            2          2 <br/>
-  Xavier      513268     4           2            1          2 <br/>
-  Como        454990     4           3            2          3 <br/>
-  Aspen       384356     4           2            2          2 <br/>
-  Lucretia    572002     4           3            2          2 <br/>
-  Toorak      521951     5           2            1          2 <br/>
-  Skyscape    263604     3           2            2          2 <br/>
-  Clifton     386103     3           2            1          1 <br/>
-  Geneva      390600     4           3            2          2 <br/>
+  Victoria | 374662 | 4 | 2 | 2 | 2 <br/>
+  Xavier | 513268 | 4 | 2 | 1 | 2 <br/>
+  Como | 454990 | 4 | 3 | 2 | 3 <br/>
+  Aspen | 384356 | 4 | 2 | 2 | 2 <br/>
+  Lucretia | 572002 | 4 | 3 | 2 | 2 <br/>
+  Toorak | 521951 | 5 | 2 | 1 | 2 <br/>
+  Skyscape | 263604 | 3 | 2 | 2 | 2 <br/>
+  Clifton | 386103 | 3 | 2 | 1 | 1 <br/>
+  Geneva | 390600 | 4 | 3 | 2 | 2 <br/>
 - Данi мають бути добавленi в базу даних. Використати Laravel мiграцiї та ciди; 
 - API повинно шукати по:
     name: також повинні відповідати часткові назви
