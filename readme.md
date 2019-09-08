@@ -22,20 +22,20 @@ Site: [makklays.com.ua](http://makklays.com.ua?from=github_laravel)
 -Bootstrap: Використати bootstrap для стилiзацiї Front-end частини. <br/>
 
 Вимоги:<br/>
-**API:** 
-- Використовуючи таблицю з данними (нижче) створити API route, що дозволяють шукати даннi;
-  name        price      bedrooms    bathrooms    storeys    garages
-  --------------------------------------------------------------------
-  Victoria    374662     4           2            2          2
-  Xavier      513268     4           2            1          2
-  Como        454990     4           3            2          3
-  Aspen       384356     4           2            2          2
-  Lucretia    572002     4           3            2          2
-  Toorak      521951     5           2            1          2
-  Skyscape    263604     3           2            2          2
-  Clifton     386103     3           2            1          1
-  Geneva      390600     4           3            2          2
-- Данi мають бути добавленi в базу даних. Використати Laravel мiграцiї та ciди;
+**API:**  <br/>
+- Використовуючи таблицю з данними (нижче) створити API route, що дозволяють шукати даннi; <br/>
+  name        price      bedrooms    bathrooms    storeys    garages <br/>
+  -------------------------------------------------------------------- <br/>
+  Victoria    374662     4           2            2          2 <br/>
+  Xavier      513268     4           2            1          2 <br/>
+  Como        454990     4           3            2          3 <br/>
+  Aspen       384356     4           2            2          2 <br/>
+  Lucretia    572002     4           3            2          2 <br/>
+  Toorak      521951     5           2            1          2 <br/>
+  Skyscape    263604     3           2            2          2 <br/>
+  Clifton     386103     3           2            1          1 <br/>
+  Geneva      390600     4           3            2          2 <br/>
+- Данi мають бути добавленi в базу даних. Використати Laravel мiграцiї та ciди; 
 - API повинно шукати по:
     name: також повинні відповідати часткові назви
     bedrooms: точна відповідність
@@ -68,20 +68,20 @@ Create a simple search form (Front-end) that will invite APIs using AJAX and dis
 -Bootstrap <br/>
 
 Requirements: <br/><br/>
-**API:**
-- Using the data table (below) to create a route API to search for data;
-  name        price      bedrooms    bathrooms    storeys    garages
-  --------------------------------------------------------------------
-  Victoria    374662     4           2            2          2
-  Xavier      513268     4           2            1          2
-  Como        454990     4           3            2          3
-  Aspen       384356     4           2            2          2
-  Lucretia    572002     4           3            2          2
-  Toorak      521951     5           2            1          2
-  Skyscape    263604     3           2            2          2
-  Clifton     386103     3           2            1          1
-  Geneva      390600     4           3            2          2
-- The data should be added to the database. Use Laravel migrations and Seedes;
+**API:** <br/>
+- Using the data table (below) to create a route API to search for data; <br/>
+  name        price      bedrooms    bathrooms    storeys    garages <br/>
+  -------------------------------------------------------------------- <br/>
+  Victoria    374662     4           2            2          2 <br/>
+  Xavier      513268     4           2            1          2 <br/>
+  Como        454990     4           3            2          3 <br/>
+  Aspen       384356     4           2            2          2 <br/>
+  Lucretia    572002     4           3            2          2 <br/>
+  Toorak      521951     5           2            1          2 <br/>
+  Skyscape    263604     3           2            2          2 <br/>
+  Clifton     386103     3           2            1          1 <br/>
+  Geneva      390600     4           3            2          2 <br/>
+- The data should be added to the database. Use Laravel migrations and Seedes; 
 - API should search on:
     name: should also match on partial names
     bedrooms: exact match
@@ -115,19 +115,19 @@ Cree un formulario de búsqueda simple (Front-end) que invitará a las API que u
 -Bootstrap <br/>
 
 Requisitos: <br/><br/>
-**API:**
-- Usar la tabla de datos (a continuación) para crear una API de ruta para buscar datos;
-  name        price      bedrooms    bathrooms    storeys    garages
-  --------------------------------------------------------------------
-  Victoria    374662     4           2            2          2
-  Xavier      513268     4           2            1          2
-  Como        454990     4           3            2          3
-  Aspen       384356     4           2            2          2
-  Lucretia    572002     4           3            2          2
-  Toorak      521951     5           2            1          2
-  Skyscape    263604     3           2            2          2
-  Clifton     386103     3           2            1          1
-  Geneva      390600     4           3            2          2
+**API:** <br/>
+- Usar la tabla de datos (a continuación) para crear una API de ruta para buscar datos; <br/>
+  name        price      bedrooms    bathrooms    storeys    garages <br/>
+  -------------------------------------------------------------------- <br/>
+  Victoria    374662     4           2            2          2 <br/>
+  Xavier      513268     4           2            1          2 <br/>
+  Como        454990     4           3            2          3 <br/>
+  Aspen       384356     4           2            2          2 <br/>
+  Lucretia    572002     4           3            2          2 <br/>
+  Toorak      521951     5           2            1          2 <br/>
+  Skyscape    263604     3           2            2          2 <br/>
+  Clifton     386103     3           2            1          1 <br/> 
+  Geneva      390600     4           3            2          2 <br/>
 - Los datos deben agregarse a la base de datos. Use migraciones y sembradoras Laravel;
 - API debe buscar en:
     name: también debe coincidir con nombres parciales
@@ -163,20 +163,20 @@ Gracias <br/><br/>
 -Bootstrap <br/>
 
 要求： <br/><br/>
-**API:**
-- 使用數據表（如下）創建路徑API以搜索數據;
-  name        price      bedrooms    bathrooms    storeys    garages
-  --------------------------------------------------------------------
-  Victoria    374662     4           2            2          2
-  Xavier      513268     4           2            1          2
-  Como        454990     4           3            2          3
-  Aspen       384356     4           2            2          2
-  Lucretia    572002     4           3            2          2
-  Toorak      521951     5           2            1          2
-  Skyscape    263604     3           2            2          2
-  Clifton     386103     3           2            1          1
-  Geneva      390600     4           3            2          2
-- 應將數據添加到數據庫中。 使用Laravel遷移和播種機;
+**API:** <br/>
+- 使用數據表（如下）創建路徑API以搜索數據; <br/>
+  name        price      bedrooms    bathrooms    storeys    garages <br/>
+  -------------------------------------------------------------------- <br/>
+  Victoria    374662     4           2            2          2 <br/>
+  Xavier      513268     4           2            1          2 <br/>
+  Como        454990     4           3            2          3 <br/>
+  Aspen       384356     4           2            2          2 <br/>
+  Lucretia    572002     4           3            2          2 <br/>
+  Toorak      521951     5           2            1          2 <br/>
+  Skyscape    263604     3           2            2          2 <br/>
+  Clifton     386103     3           2            1          1 <br/>
+  Geneva      390600     4           3            2          2 <br/>
+- 應將數據添加到數據庫中。 使用Laravel遷移和播種機; 
 - API應搜索：
     name: 也應匹配部分名稱
     bedrooms: 完全符合
