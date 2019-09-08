@@ -6,8 +6,11 @@
         <div class="row" style="margin: 0;">
             <div class="col-md-12">
                 <div>
+                    <a href="/ttable-vue?lang=es" style="margin:0 10px 0 0;"><img src="/img/icons/spain.png" width="18px" title="ES" alt="es" /></a>
                     <a href="/ttable-vue?lang=ru" style="margin:0 10px 0 0;"><img src="/img/icons/russia.png" width="18px" title="RU" alt="ru" /></a>
-                    <a href="/ttable-vue?lang=en"><img src="/img/icons/uk.png" width="18px" title="EN" alt="en" /></a>
+                    <a href="/ttable-vue?lang=en" style="margin:0 10px 0 0;"><img src="/img/icons/uk.png" width="18px" title="EN" alt="en" /></a>
+                    <a href="/ttable-vue?lang=ua" style="margin:0 10px 0 0;"><img src="/img/icons/ukraine.png" width="18px" title="UA" alt="ua" /></a>
+                    <a href="/ttable-vue?lang=ch" style="margin:0 10px 0 0;"><img src="/img/icons/china.png" width="18px" title="CH" alt="ch" /></a>
                 </div>
             </div>
             <div class="col-md-12">
