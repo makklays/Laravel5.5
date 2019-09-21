@@ -227,7 +227,7 @@ class BitcoinController extends Controller
             }
         }
 
-        return Excel::download(new BitcoinExport, 'exchange-bitcoin.xlsx');
+        return Excel::download(new BitcoinExport($request), 'exchange-bitcoin.xlsx');
     }
 
     public function getDataCSV(Request $request)
