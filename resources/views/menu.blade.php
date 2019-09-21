@@ -36,13 +36,8 @@
                 <a href="/ttable-vue?lang=en" >web - Форма поиска (c Vue.js)</a> <br/><br/>
             </div>
             <div class="col-md-4">
-                <!--
-                <a href="/api/all-books" >API - список книг</a> <br/>
-                <a href="/api/book/1" >API - выбранная книга</a> <br/><br/>
-
-                <a href="/api/all-authors" >API - список авторов</a> <br/>
-                <a href="/api/author/1" >API - выбранный автор</a> <br/><br/>
-                -->
+                <a href="/currency" >Module Bitcoin - Получить все данные для площадок</a> <br/>
+                <a href="/currency/add" >Module Bitcoin - Добавить курс валюты</a> <br/><br/>
             </div>
             <div class="col-md-4">
                 <!--

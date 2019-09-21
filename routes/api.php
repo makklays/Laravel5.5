@@ -40,4 +40,6 @@ Route::delete('delete-book', 'BooksController@deleteBooks');
 Route::post('search-ttable', ['as' => 'search_ttable', 'uses' => 'TTableController@search']);
 Route::get('all-ttable', 'TTableController@getTTable');
 
+// Module
+Route::get('all-currency', 'TTableController@getCurrency');
 
