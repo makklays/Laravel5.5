@@ -44,36 +44,21 @@ class CreateBitcoinsTable extends Migration
         }';
         $count = json_decode($json);
 
+        $arr_dates = [
+            '2019-09-20 16:53:04', '2019-09-21 16:54:04',
+            '2019-09-20 16:55:05', '2019-09-21 16:58:08', '2019-09-21 16:57:10'
+        ];
 
-        DB::table('bitcoins')->insert([
-            //'id' => 1,
-            'title' => 'UAH-BTC',
-            'price' => '0.00000416',
-            'fees' => '{"in_fix":2,"in_per":"0.50","out_fix":0.0005,"out_per":0}',
-            'limits' => '{"min":691,"max":14000,"max_out":"0.05827721","min_out":null}',
-            'created_at' => '2019-09-21 16:53:00',
-        ]);
-
-        DB::table('bitcoins')->insert([
-            //'id' => 3,
-            'title' => 'UAH-LTC',
-            'price' => '0.00060548',
-            'price_2' => '0.00013958',
-            'fees' => '{"in_fix":2,"in_per":"0.50","out_fix":0.01,"out_per":0}',
-            'limits' => '{"min":969,"max":14000,"max_out":"8.47672162","min_out":null}',
-            'created_at' => '2019-09-21 16:53:02',
-        ]);
-
-        DB::table('bitcoins')->insert([
-            //'id' => 3,
-            'title' => 'UAH-BCH',
-            'price' => '0.00013958',
-            'price_2' => '0.00013958',
-            'fees' => '{"in_fix":2,"in_per":"0.50","out_fix":0.001,"out_per":0}',
-            'limits' => '{"min":91,"max":14000,"max_out":"1.95421107","min_out":null}',
-            'created_at' => '2019-09-20 16:53:04',
-        ]);
-
+        foreach($count as $k => $item){
+            DB::table('bitcoins')->insert([
+                'title' => trim($k),
+                'price' => (float) (isset($item->price) && $item->price >= 0 ? round($item->price, 8, PHP_ROUND_HALF_DOWN) : 0),
+                'price_2' => (float) (isset($item->price_2) && $item->price_2 >= 0 ? round($item->price_2, 8, PHP_ROUND_HALF_DOWN) : 0),
+                'fees' => (isset($item->fees) && !empty($item->fees) ? json_encode($item->fees) : ''),
+                'limits' => (isset($item->limits) && !empty($item->limits) ? json_encode($item->limits) : ''),
+                'created_at' => $arr_dates[rand(0,4)],
+            ]);
+        }
     }
 
     /**

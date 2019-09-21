@@ -1,26 +1,68 @@
 <?php
 namespace App\Modules\Bitcoin\Controllers;
 
+use App\Modules\Bitcoin\exports\BitcoinExport;
+use Exception;
 use App\Http\Controllers\Controller;
 use App\Modules\Bitcoin\models\Bitcoin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
 
 class BitcoinController extends Controller
 {
+    /**
+     * BitcoinController constructor.
+     */
     public function __construct()
     {
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index()
+    {
+        return view('Bitcoin::bitcoin.index');
     }
 
     /**
      * Получить все данные
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function getDataJson(Request $request)
     {
+        // валидация - по названию (часть слова)
+        if (isset($request->name)) {
+            $validate = Validator::make($request->all(), [
+                'name' => 'required|string|alpha_dash|max:255',
+            ]);
+            if ($validate->fails()) {
+                return response()->json([
+                    'info' => 'Данные для разных обменных площадок. Url для добавления данных.',
+                    'error' => 'ОШИПКА!) Ошибка валидации данных параметра - name',
+                ], 404);
+            }
+        }
+
+        // валидация - по дате
+        if (isset($request->date)) {
+            $validate = Validator::make($request->all(), [
+                'date' => 'required|date_format:"Y-m-d"',
+            ]);
+            if ($validate->fails()) {
+                return response()->json([
+                    'info' => 'Данные для разных обменных площадок. Url для добавления данных.',
+                    'error' => 'ОШИПКА!) Ошибка валидации данных параметра - date',
+                ], 404);
+            }
+        }
+
         return response()->json([
             'info' => 'Данные для разных обменных площадок. Url для получения данных',
-            'data' => Bitcoin::get(),
+            'data' => Bitcoin::search($request)->orderBy('created_at', 'DESC')->get(),
         ], 200);
     }
 
@@ -44,6 +86,7 @@ class BitcoinController extends Controller
             ], 404);
         }
 
+        // добавление курса обмена валюты
         $bi = new Bitcoin();
         //$bi->load($request);
         $bi->title = $request->get('title');
@@ -75,10 +118,140 @@ class BitcoinController extends Controller
 
         return response()->json([
             'info' => 'Данные для разных обменных площадок. Url для добавления данных.',
-            'success' => 'Данные успешно добавлены',
+            'success' => 'Данные успешно добавлены!',
             'id' => $bi->id,
             'title' => $bi->title,
             'datetime' => $bi->created_at,
         ], 200);
+    }
+
+    public function getDataXML(Request $request)
+    {
+        // валидация - по названию (часть слова)
+        if (isset($request->name)) {
+            $validate = Validator::make($request->all(), [
+                'name' => 'required|string|alpha_dash|max:255',
+            ]);
+            if ($validate->fails()) {
+                return response()->json([
+                    'info' => 'Данные для разных обменных площадок. Url для добавления данных.',
+                    'error' => 'ОШИПКА!) Ошибка валидации данных параметра - name',
+                ], 404);
+            }
+        }
+
+        // валидация - по дате
+        if (isset($request->date)) {
+            $validate = Validator::make($request->all(), [
+                'date' => 'required|date_format:"Y-m-d"',
+            ]);
+            if ($validate->fails()) {
+                return response()->json([
+                    'info' => 'Данные для разных обменных площадок. Url для добавления данных.',
+                    'error' => 'ОШИПКА!) Ошибка валидации данных параметра - date',
+                ], 404);
+            }
+        }
+
+        $datas = Bitcoin::search($request)->orderBy('created_at', 'DESC')->get();
+
+        try {
+
+            $xml = new XMLWriter();
+            //$xml->openUri('documents/xmls/bitcoin_'.date('d_m_Y').'.xml');
+            $xml->openUri('file_'.date('d_m_Y').'.xml');
+            $xml->startDocument('1.0');
+            $xml->startElement('currency');
+
+            foreach ($datas as $k => $itm) {
+                $xml->startElement('exchange');
+                $xml->writeElement('title', $itm->title);
+                $xml->writeElement('price', $itm->price);
+                $xml->writeElement('price_2', $itm->price_2);
+
+                if (isset($itm->fees) && !empty($itm->fees)) {
+                    $xml->startElement('fees');
+                    $fees = json_decode($itm->fees);
+                    foreach($fees as $k => $v) {
+                        $xml->writeElement($k, (float) $v);
+                    }
+                    $xml->endElement();
+                }
+
+                if (isset($itm->limits) && !empty($itm->limits)) {
+                    $xml->startElement('limits');
+                    $limits = json_decode($itm->limits);
+                    foreach($limits as $k => $v) {
+                        $xml->writeElement($k, (float) $v);
+                    }
+                    $xml->endElement();
+                }
+                // $xml->writeElement('limits', $itm->limits);
+                $xml->writeElement('datetime', $itm->created_at);
+                $xml->endElement();
+            }
+
+            $xml->endElement();
+            $xml->endDocument();
+            $xml->flush();
+
+        } catch (Exception $e) {
+            echo 'ERROR! Exception: '.$e->getMessage(). ' File: '.$e->getFile() . 'Line: '.$e->getLine();
+        }
+
+        //return response()->download($xml);
+        return response(file_get_contents('file_'.date('d_m_Y').'.xml'), 200, [
+            'Content-Type' => 'application/xml'
+        ]);
+    }
+
+    public function getDataExcel(Request $request)
+    {
+        // валидация - по названию (часть слова)
+        if (isset($request->name)) {
+            $validate = Validator::make($request->all(), [
+                'name' => 'required|string|alpha_dash|max:255',
+            ]);
+            if ($validate->fails()) {
+                return view('/currency/'); // add ->with()
+            }
+        }
+
+        // валидация - по дате
+        if (isset($request->date)) {
+            $validate = Validator::make($request->all(), [
+                'date' => 'required|date_format:"Y-m-d"',
+            ]);
+            if ($validate->fails()) {
+                return view('/currency/'); // add ->with()
+            }
+        }
+
+        return Excel::download(new BitcoinExport($request), 'exchange-bitcoin.xlsx');
+    }
+
+    public function getDataCSV(Request $request)
+    {
+        // если есть переменная 'name' - валидация - по названию (часть слова)
+        if (isset($request->name)) {
+            $validate = Validator::make($request->all(), [
+                'name' => 'required|string|alpha_dash|max:255',
+            ]);
+            if ($validate->fails()) {
+                return view('/currency/'); // add ->with()
+            }
+        }
+
+        // если есть переменная 'date' - валидация - по дате
+        if (isset($request->date)) {
+            $validate = Validator::make($request->all(), [
+                'date' => 'required|date_format:"Y-m-d"',
+            ]);
+            if ($validate->fails()) {
+                return view('/currency/'); // add ->with()
+            }
+        }
+
+        return Excel::download(new BitcoinExport($request), 'exchange-bitcoin.csv');
     }
 }

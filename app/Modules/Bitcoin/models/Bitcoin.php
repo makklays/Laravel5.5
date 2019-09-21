@@ -3,6 +3,8 @@
 namespace App\Modules\Bitcoin\models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class Bitcoin extends Model
 {
@@ -12,7 +14,6 @@ class Bitcoin extends Model
 
     protected $fillable = [
         'title',
-        //'price',
         //'price_2',
         'fees',
         /*'fees_in_fix',
@@ -28,6 +29,17 @@ class Bitcoin extends Model
 
     protected $guarded = [
         'price',
-        //'price_2'
     ];
+
+    public function scopeSearch($query, $request)
+    {
+        if (isset($request->name)) {
+            $query->where('title', 'LIKE', '%'.$request->name.'%');
+        }
+        if (isset($request->date)) {
+            $query->where(DB::raw("(DATE_FORMAT(created_at,'%Y-%m-%d'))"), $request->date);
+        }
+
+        return $query;
+    }
 }
