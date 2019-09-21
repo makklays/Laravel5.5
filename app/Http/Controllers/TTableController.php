@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 //use Illuminate\Validation\Validator;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 /**
  * Класс - TTableController
@@ -100,7 +101,35 @@ class TTableController extends Controller
         ],200);
     }
 
+    /**
+     * Функция по скачиванию файла в формате excel
+     * @return \Illuminate\Http\JsonResponse
+     */
+    /*public function exportExcel()
+    {
+        ob_end_clean();
+        ob_start();
+        Excel::create('Filename', function($excel) {
 
+            // Set the title
+            $excel->setTitle('Our new awesome title');
+
+            // Chain the setters
+            $excel->setCreator('Maatwebsite')
+                ->setCompany('Maatwebsite');
+
+            // Call them separately
+            $excel->setDescription('A demonstration to change the file properties');
+
+        })->store('xls', storage_path('exports')); ; // ->export('xls');
+
+        $report_excelFilepath = storage_path('exports') . "/Report.xls";
+
+        return response()->download($report_excelFilepath, "Report.xls", [
+            'Content-Type' => 'application/vnd.ms-excel',
+            'Content-Disposition' => "attachment; filename='Report.xls'"
+        ]);
+    }*/
 }
 
 

@@ -47,6 +47,8 @@ Route::get('/author/{id}', ['as' => 'show_author', 'uses' => 'AuthorsController@
 
 Route::get('ttable', ['as' => 'form_ttable', 'uses' => 'TTableController@form']);
 Route::get('ttable-vue', ['as' => 'form_ttable_vue', 'uses' => 'TTableController@formVue']);
+//Route::get('ttable-excel', ['as' => 'form_ttable_excel', 'uses' => 'TTableController@exportExcel']);
+
 
 //Auth::routes();
 
