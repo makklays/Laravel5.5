@@ -62,7 +62,8 @@ class BitcoinController extends Controller
 
         return response()->json([
             'info' => 'Данные для разных обменных площадок. Url для получения данных',
-            'data' => Bitcoin::search($request)->orderBy('created_at', 'DESC')->get(),
+            'data' => Bitcoin::select(['bitcoins.title', 'bitcoins.price', 'bitcoins.price_2', 'bitcoins.limits'])
+                ->search($request)->orderBy('created_at', 'DESC')->get(),
         ], 200);
     }
 
@@ -153,7 +154,8 @@ class BitcoinController extends Controller
             }
         }
 
-        $datas = Bitcoin::search($request)->orderBy('created_at', 'DESC')->get();
+        $datas = Bitcoin::select(['bitcoins.title', 'bitcoins.price', 'bitcoins.price_2', 'bitcoins.limits'])
+            ->search($request)->orderBy('created_at', 'DESC')->get();
 
         try {
 
@@ -169,14 +171,15 @@ class BitcoinController extends Controller
                 $xml->writeElement('price', $itm->price);
                 $xml->writeElement('price_2', $itm->price_2);
 
-                if (isset($itm->fees) && !empty($itm->fees)) {
+                // комиссию не отображаем
+                /*if (isset($itm->fees) && !empty($itm->fees)) {
                     $xml->startElement('fees');
                     $fees = json_decode($itm->fees);
                     foreach($fees as $k => $v) {
                         $xml->writeElement($k, (float) $v);
                     }
                     $xml->endElement();
-                }
+                }*/
 
                 if (isset($itm->limits) && !empty($itm->limits)) {
                     $xml->startElement('limits');
