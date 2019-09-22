@@ -19,7 +19,7 @@ class BitcoinExport implements FromCollection
     */
     public function collection()
     {
-        return Bitcoin::search($this->params)->orderBy('created_at', 'DESC')->get();
-        //return Bitcoin::all();
+        return Bitcoin::select(['bitcoins.title', 'bitcoins.price', 'bitcoins.price_2', 'bitcoins.limits'])
+            ->search($this->params)->orderBy('created_at', 'DESC')->get();
     }
 }
