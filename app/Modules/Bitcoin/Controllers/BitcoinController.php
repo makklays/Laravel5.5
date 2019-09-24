@@ -25,6 +25,7 @@ class BitcoinController extends Controller
      */
     public function index()
     {
+
         return view('Bitcoin::bitcoin.index');
     }
 
@@ -60,11 +61,50 @@ class BitcoinController extends Controller
             }
         }
 
-        return response()->json([
+        $data = Bitcoin::select([
+            'bitcoins.title', 'bitcoins.price', 'bitcoins.price_2', 'bitcoins.fee_in_per',
+            'bitcoins.limits', 'bitcoins.limit_min' ])
+            ->search($request)->orderBy('created_at', 'DESC')->get();
+
+        foreach($data as $itm) {
+            $name = explode('-', $itm->title);
+            //dd($name);
+
+            // отнимаем процент комиссии
+            $price = ( $itm->price - ( $itm->price * $itm->fee_in_per / 100 ) );
+            // округляем в меньшую сторону 8 знаков после запятой
+            $new_price = round($price, 8,PHP_ROUND_HALF_DOWN);
+
+            /*if ($new_price > 0 && $new_price < 1) {
+                $price_out = round(1 / $new_price, 8, PHP_ROUND_HALF_DOWN);
+                $new_price = 1;
+            }*/
+
+            $from[$name[0]]['to'][$name[1]] = [
+                'in' => 1,
+                'out' => round($new_price, 6,PHP_ROUND_HALF_DOWN),
+
+                //'fee_in_per' => $itm->fee_in_per,
+                'in_min_amount' => $itm->limit_min,
+            ];
+        }
+        $arr_data['from'] = $from;
+        $arr_data['options'] = ["auth", "identity"];
+
+        return response($arr_data)->header('Content-Type', 'application/json');
+
+        //echo '{';
+        //exit;
+
+        /*echo '<pre>';
+        print_r($data);
+        echo '</pre>';
+        exit;*/
+
+        /*return response()->json([
             'info' => 'Данные для разных обменных площадок. Url для получения данных',
-            'data' => Bitcoin::select(['bitcoins.title', 'bitcoins.price', 'bitcoins.price_2', 'bitcoins.limits'])
-                ->search($request)->orderBy('created_at', 'DESC')->get(),
-        ], 200);
+            'data' => $data,
+        ], 200); */
     }
 
     /**
