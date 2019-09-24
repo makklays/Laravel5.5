@@ -14,6 +14,7 @@ class CreateBitcoinsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('bitcoins');
         Schema::create('bitcoins', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
@@ -21,7 +22,17 @@ class CreateBitcoinsTable extends Migration
             $table->double('price_2', 20, 8)->nullable();
 
             $table->json('fees');
+            $table->double('fee_in_fix');
+            $table->double('fee_in_per');
+            $table->double('fee_out_fix');
+            $table->double('fee_out_per');
+
             $table->json('limits')->nullable();
+            $table->double('limit_min');
+            $table->double('limit_max');
+            $table->double('limit_min_out');
+            $table->double('limit_max_out');
+
             $table->datetime('created_at');
         });
 
@@ -49,13 +60,34 @@ class CreateBitcoinsTable extends Migration
             '2019-09-20 16:55:05', '2019-09-21 16:58:08', '2019-09-21 16:57:10'
         ];
 
-        foreach($count as $k => $item){
+        foreach($count as $k => $item) {
+
+            //dd($item->fees->in_fix);
+
+            $fees_in_fix = (isset($item->fees->in_fix) && !empty($item->fees->in_fix) ? $item->fees->in_fix : 0);
+            $fees_in_per = (isset($item->fees->in_per) && !empty($item->fees->in_per) ? $item->fees->in_per : 0);
+            $fees_out_fix = (isset($item->fees->out_fix) && !empty($item->fees->out_fix) ? $item->fees->out_fix : 0);
+            $fees_out_per = (isset($item->fees->out_per) && !empty($item->fees->out_per) ? $item->fees->out_per : 0);
+
+            $limit_min = (isset($item->limits->min) && !empty($item->limits->min) ? $item->limits->min : 0);
+            $limit_max = (isset($item->limits->max) && !empty($item->limits->max) ? $item->limits->max : 0);
+            $limit_min_out = (isset($item->limits->min_out) && !empty($item->limits->min_out) ? $item->limits->min_out : 0);
+            $limit_max_out = (isset($item->limits->max_out) && !empty($item->limits->max_out) ? $item->limits->max_out : 0);
+
             DB::table('bitcoins')->insert([
                 'title' => trim($k),
                 'price' => (float) (isset($item->price) && $item->price >= 0 ? round($item->price, 8, PHP_ROUND_HALF_DOWN) : 0),
                 'price_2' => (float) (isset($item->price_2) && $item->price_2 >= 0 ? round($item->price_2, 8, PHP_ROUND_HALF_DOWN) : 0),
                 'fees' => (isset($item->fees) && !empty($item->fees) ? json_encode($item->fees) : ''),
+                'fee_in_fix' => (float) (isset($fees_in_fix) && !empty($fees_in_fix) ? $fees_in_fix : 0),
+                'fee_in_per' => (float) (isset($fees_in_per) && !empty($fees_in_per) ? $fees_in_per : 0),
+                'fee_out_fix' => (float) (isset($fees_out_fix) && !empty($fees_out_fix) ? $fees_out_fix : 0),
+                'fee_out_per' => (float) (isset($fees_out_per) && !empty($fees_out_per) ? $fees_out_per : 0),
                 'limits' => (isset($item->limits) && !empty($item->limits) ? json_encode($item->limits) : ''),
+                'limit_min' => (float) (isset($limit_min) && !empty($limit_min) ? $limit_min : 0),
+                'limit_max' => (float) (isset($limit_max) && !empty($limit_max) ? $limit_max : 0),
+                'limit_min_out' => (float) (isset($limit_min_out) && !empty($limit_min_out) ? $limit_min_out : 0),
+                'limit_max_out' => (float) (isset($limit_max_out) && !empty($limit_max_out) ? $limit_max_out : 0),
                 'created_at' => $arr_dates[rand(0,4)],
             ]);
         }
