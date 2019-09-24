@@ -207,8 +207,8 @@ class BitcoinController extends Controller
         try {
 
             foreach ($datas as $k => $itm) {
+                // названия валют
                 $name = explode('-', $itm->title);
-
                 // отнимаем процент комиссии
                 $price = ($itm->price - ($itm->price * $itm->fee_in_per / 100));
                 // округляем в меньшую сторону 8 знаков после запятой
@@ -220,7 +220,6 @@ class BitcoinController extends Controller
                     // по правилам площадки округляем до 6 знаков после запятой
                     // сколько получаем
                     'out' => round($new_price,6,PHP_ROUND_HALF_DOWN),
-
                     // минимальная сумма обмена
                     'in_min_amount' => round($itm->limit_min,6,PHP_ROUND_HALF_DOWN),
                 ];
@@ -237,16 +236,12 @@ class BitcoinController extends Controller
                 foreach($to as $too) {
                     $xml->startElement('to');
                     foreach ($too as $name_to => $item_elems) {
-
-                        //dd($item_elems);
-
                         $xml->startElement($name_to);
-                        //foreach ($item_elems as $itm) {
-                            $xml->writeElement('in', $item_elems['in']);
-                            $xml->writeElement('out', (float) $item_elems['out']);
-                            $xml->writeElement('in_min_amount', $item_elems['in_min_amount']);
-                            //$xml->writeElement('datetime', $itm->created_at);
-                        //}
+
+                        $xml->writeElement('in', $item_elems['in']);
+                        $xml->writeElement('out', (float) $item_elems['out']);
+                        $xml->writeElement('in_min_amount', $item_elems['in_min_amount']);
+
                         $xml->endElement();
                     }
                     $xml->endElement();
