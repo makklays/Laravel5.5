@@ -66,45 +66,50 @@ class BitcoinController extends Controller
             'bitcoins.limits', 'bitcoins.limit_min' ])
             ->search($request)->orderBy('created_at', 'DESC')->get();
 
-        foreach($data as $itm) {
-            $name = explode('-', $itm->title);
-            //dd($name);
+        if (isset($data) && !empty($data)) {
+            foreach ($data as $itm) {
+                // названия валют
+                $name = explode('-', $itm->title);
 
-            // отнимаем процент комиссии
-            $price = ( $itm->price - ( $itm->price * $itm->fee_in_per / 100 ) );
-            // округляем в меньшую сторону 8 знаков после запятой
-            $new_price = round($price, 8,PHP_ROUND_HALF_DOWN);
+                // отнимаем процент комиссии
+                $price = ($itm->price - ($itm->price * $itm->fee_in_per / 100));
+                // округляем в меньшую сторону 8 знаков после запятой
+                $new_price = round($price, 8, PHP_ROUND_HALF_DOWN);
 
-            /*if ($new_price > 0 && $new_price < 1) {
-                $price_out = round(1 / $new_price, 8, PHP_ROUND_HALF_DOWN);
-                $new_price = 1;
-            }*/
+                /*if ($new_price > 0 && $new_price < 1) {
+                    $price_out = round(1 / $new_price, 8, PHP_ROUND_HALF_DOWN);
+                    $new_price = 1;
+                }*/
 
-            $from[$name[0]]['to'][$name[1]] = [
-                'in' => 1,
-                'out' => round($new_price, 6,PHP_ROUND_HALF_DOWN),
+                $from[$name[0]]['to'][$name[1]] = [
+                    // сколько отдаем
+                    'in' => 1,
+                    // по правилам площадки округляем до 6 знаков после запятой
+                    // сколько получаем
+                    'out' => round($new_price, 6, PHP_ROUND_HALF_DOWN),
 
-                //'fee_in_per' => $itm->fee_in_per,
-                'in_min_amount' => $itm->limit_min,
+                    // не отображаем комиссию
+                    //'fee_in_per' => $itm->fee_in_per,
+
+                    // минимальная сумма обмена
+                    'in_min_amount' => round($itm->limit_min, 6, PHP_ROUND_HALF_DOWN),
+                ];
+            }
+        }
+        if (isset($from) && !empty($from)) {
+            $arr_data['from'] = $from;
+
+            // identity - обмен возможен только после прохождения процедуры идентификации (верификации);
+            // auth - обмен возможен только после авторизации (регистрации) на сайте.
+            $arr_data['options'] = ["auth", "identity"];
+        } else {
+            $arr_data = [
+                'info' => 'Данные c курсами валют.',
+                'error' => 'ОШИПКА!) Ошибка при загрузке данных на сервисе.',
             ];
         }
-        $arr_data['from'] = $from;
-        $arr_data['options'] = ["auth", "identity"];
 
-        return response($arr_data)->header('Content-Type', 'application/json');
-
-        //echo '{';
-        //exit;
-
-        /*echo '<pre>';
-        print_r($data);
-        echo '</pre>';
-        exit;*/
-
-        /*return response()->json([
-            'info' => 'Данные для разных обменных площадок. Url для получения данных',
-            'data' => $data,
-        ], 200); */
+        return response($arr_data, 200)->header('Content-Type', 'application/json');
     }
 
     /**
@@ -194,43 +199,53 @@ class BitcoinController extends Controller
             }
         }
 
-        $datas = Bitcoin::select(['bitcoins.title', 'bitcoins.price', 'bitcoins.price_2', 'bitcoins.limits'])
+        $datas = Bitcoin::select([
+            'bitcoins.title', 'bitcoins.price', 'bitcoins.price_2', 'bitcoins.fee_in_per',
+            'bitcoins.limits', 'bitcoins.limit_min' ])
             ->search($request)->orderBy('created_at', 'DESC')->get();
 
         try {
+
+            foreach ($datas as $k => $itm) {
+                // названия валют
+                $name = explode('-', $itm->title);
+                // отнимаем процент комиссии
+                $price = ($itm->price - ($itm->price * $itm->fee_in_per / 100));
+                // округляем в меньшую сторону 8 знаков после запятой
+                $new_price = round($price, 8, PHP_ROUND_HALF_DOWN);
+
+                $from[$name[0]]['to'][$name[1]] = [
+                    // сколько отдаем
+                    'in' => 1,
+                    // по правилам площадки округляем до 6 знаков после запятой
+                    // сколько получаем
+                    'out' => round($new_price,6,PHP_ROUND_HALF_DOWN),
+                    // минимальная сумма обмена
+                    'in_min_amount' => round($itm->limit_min,6,PHP_ROUND_HALF_DOWN),
+                ];
+            }
 
             $xml = new XMLWriter();
             //$xml->openUri('documents/xmls/bitcoin_'.date('d_m_Y').'.xml');
             $xml->openUri('file_'.date('d_m_Y').'.xml');
             $xml->startDocument('1.0');
-            $xml->startElement('currency');
+            $xml->startElement('from');
 
-            foreach ($datas as $k => $itm) {
-                $xml->startElement('exchange');
-                $xml->writeElement('title', $itm->title);
-                $xml->writeElement('price', $itm->price);
-                $xml->writeElement('price_2', $itm->price_2);
+            foreach ($from as $name_from => $to) {
+                $xml->startElement($name_from);
+                foreach($to as $too) {
+                    $xml->startElement('to');
+                    foreach ($too as $name_to => $item_elems) {
+                        $xml->startElement($name_to);
 
-                // комиссию не отображаем
-                /*if (isset($itm->fees) && !empty($itm->fees)) {
-                    $xml->startElement('fees');
-                    $fees = json_decode($itm->fees);
-                    foreach($fees as $k => $v) {
-                        $xml->writeElement($k, (float) $v);
-                    }
-                    $xml->endElement();
-                }*/
+                        $xml->writeElement('in', $item_elems['in']);
+                        $xml->writeElement('out', (float) $item_elems['out']);
+                        $xml->writeElement('in_min_amount', $item_elems['in_min_amount']);
 
-                if (isset($itm->limits) && !empty($itm->limits)) {
-                    $xml->startElement('limits');
-                    $limits = json_decode($itm->limits);
-                    foreach($limits as $k => $v) {
-                        $xml->writeElement($k, (float) $v);
+                        $xml->endElement();
                     }
                     $xml->endElement();
                 }
-                // $xml->writeElement('limits', $itm->limits);
-                $xml->writeElement('datetime', $itm->created_at);
                 $xml->endElement();
             }
 
