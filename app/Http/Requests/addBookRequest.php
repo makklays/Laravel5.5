@@ -44,4 +44,16 @@ class addBookRequest extends FormRequest
             'picture.max:2048' => 'Размер изображения должен быть меньше 2МБ',
         ];
     }
+    
+    // when use api and /route/api.php
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => 'Bad Request',
+                'errors' => $validator->errors(),
+            ]);
+        });
+    }
 }
