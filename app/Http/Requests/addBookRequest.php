@@ -45,8 +45,8 @@ class addBookRequest extends FormRequest
         ];
     }
     
-    // when use api and /route/api.php
-    public function withValidator($validator)
+    // when use api and /route/api.php - for example
+    /*public function withValidator($validator)
     {
         $validator->after(function ($validator) {
             return response()->json([
@@ -55,5 +55,5 @@ class addBookRequest extends FormRequest
                 'errors' => $validator->errors(),
             ]);
         });
-    }
+    }*/
 }
