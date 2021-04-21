@@ -124,16 +124,17 @@ class PersonController extends Controller
      * /1 * * * *  php  /upload_persons_from_api.php
      * то в клиентской базе данных всегда будут всежие и достоверные данные.
      */
-    public function uploadPersons(Request $request)
+    public function uploadPersons(GetPersonsRequest $request)
     {
         // валидируем данные - offset (если имеются)
-        $validator = Validator::make($request->all(), [
+        // в GetPersonsRequest 
+        /*$validator = Validator::make($request->all(), [
             'offset' => 'date_format:"Y-m-d"',
         ]);
         if ($validator->fails()) {
             echo 'ERROR: Параметр offset - некорректного формата (YYYY-mm-dd)';
             exit;
-        }
+        }*/
 
         // получаем параметр offset
         $offset = $request->get('offset');
