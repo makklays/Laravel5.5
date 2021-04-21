@@ -49,10 +49,11 @@ class PersonController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getPersons(Request $request)
+    public function getPersons(GetPersonsRequest $request)
     {
         // обрабатываем данные
-        $validator = Validator::make($request->all(), [
+        // в GetPersonsRequest 
+        /*$validator = Validator::make($request->all(), [
             'offset' => 'date_format:"Y-m-d"',
         ]);
         if ($validator->fails()) {
@@ -61,7 +62,7 @@ class PersonController extends Controller
                 'site' => 'http://makklays.com.ua',
                 'error' => 'Параметр offset - не корректного формата (YYYY-mm-dd)',
             ], 404);
-        }
+        }*/
 
         $offset = $request->get('offset');
 
